@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark  accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
             <div class="sidebar-brand-icon rotate-n-15">
                   <i class="bi bi-fork-knife"></i>
             </div>
@@ -14,8 +14,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-            <a class="nav-link <?php echo (isset($_GET['x']) && $_GET['x'] == 'Home') ? 'active link-light' : 'link-dark'; ?>"
-                  href="Home">
+            <a class="nav-link <?php echo (isset($_GET['x']) && $_GET['x'] == 'home') ?>" href="home">
                   <i class="fas fa-fw fa-tachometer-alt"></i>
                   <span>Home</span></a>
       </li>
@@ -38,9 +37,9 @@
             <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pilihan</h6>
-                        <a class="nav-link  <?php echo (isset($_GET['x']) && $_GET['x'] == 'makanan') ? 'active link-light' : 'link-dark'; ?> collapse-item"
+                        <a class="nav-link collapse-item <?php echo (isset($_GET['x']) && $_GET['x'] == 'makanan') ?>"
                               href="makanan">Makanan</a>
-                        <a class="nav-link  <?php echo (isset($_GET['x']) && $_GET['x'] == 'minuman') ? 'active link-light' : 'link-dark'; ?> collapse-item"
+                        <a class="nav-link collapse-item <?php echo (isset($_GET['x']) && $_GET['x'] == 'minuman') ?> "
                               href="minuman">Minuman</a>
                   </div>
             </div>
