@@ -10,6 +10,8 @@ if (isset($_GET['x']) && $_GET['x'] == 'home') {
     include "main.php";
 } elseif (isset($_GET['x']) && $_GET['x'] == 'login') {
     include "login.php";
+} elseif (isset($_GET['x']) && $_GET['x'] == 'logout') {
+    include "validate/validate_logout.php";
 } else {
     include "main.php";
 }

@@ -206,8 +206,7 @@
                         </div>
                         <div class="modal-footer">
                               <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                              <a class="btn btn-primary <?php echo (isset($_GET['x']) && $_GET['x'] == 'login') ?>"
-                                    href="login">Logout</a>
+                              <a class="btn btn-primary" href="logout">Logout</a>
                         </div>
                   </div>
             </div>

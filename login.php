@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!empty($_SESSION["username_kantin"])) {
+    header('location:home');
+}
+?>
+
 <?php include 'head.php'; ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
@@ -159,10 +166,10 @@
                 src="assets/brand/RSLogo.svg" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
             <div class="form-floating">
-                <input name="username" type="email" class="form-control" id="floatingInput"
-                    placeholder="name@example.com" required> <label for="floatingInput">Email address</label>
+                <input name="username" type="text" class="form-control" id="floatingInput" placeholder="sakinakantin"
+                    required> <label for="floatingInput">ID Pegawai</label>
                 <div class="invalid-feedback">
-                    Email Salah
+                    ID Salah
                 </div>
             </div>
             <div class="form-floating">
