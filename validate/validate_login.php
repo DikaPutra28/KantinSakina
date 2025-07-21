@@ -9,7 +9,8 @@ if (!empty($_POST['submit_validate'])) {
       $query = mysqli_query($conn, "select * from user where username = '$username' && password = '$password'");
       $hasil = mysqli_fetch_array($query);
       if ($hasil) {
-            $_SESSION["username_kantin"] = $username;
+            $_SESSION['username_kantin'] = $username;
+            $_SESSION['level_kantin'] = $hasil['level'];
             header('location:../home');
       } else { ?>
             <script>

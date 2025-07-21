@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-header">
             <i class="bi bi-fork-knife"></i>
-            Menu Makanan
+            Settingan Kios
         </div>
         <div class="card-body">
             <h5 class="card-title">Sakina Kantin</h5>

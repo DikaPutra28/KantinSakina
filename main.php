@@ -1,8 +1,12 @@
 <?php
-session_start();
+//session_start();
 if (empty($_SESSION["username_kantin"])) {
       header('location:login');
 }
+
+include "Database/connect.php";
+$query = mysqli_query($conn, "select * from user where username = '$_SESSION[username_kantin]'");
+$hasil = mysqli_fetch_array($query);
 ?>
 <?php include 'head.php'; ?>
 
