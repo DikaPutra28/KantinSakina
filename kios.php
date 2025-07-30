@@ -14,7 +14,7 @@ while ($record = mysqli_fetch_array($query)) {
             <i class="bi bi-fork-knife"></i>
             Setingan User
         </div>
-        <div class="card-body">
+        <div class="card-body-scrollable">
             <div class="row">
                 <div class="col d-flex justify-content-end">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah User</button>
@@ -256,3 +256,37 @@ while ($record = mysqli_fetch_array($query)) {
         })
     })()
 </script>
+
+<style>
+    /* Include the CSS here or link to an external stylesheet */
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 97%;
+        /* Example width for the card */
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-header {
+        background-color: #f0f0f0;
+        padding: 10px 15px;
+        border-bottom: 1px solid #eee;
+        font-weight: bold;
+    }
+
+    .card-body-scrollable {
+        overflow-x: auto;
+        /* Adds horizontal scrollbar when content overflows */
+        padding: 15px;
+        /* white-space: nowrap; /* Uncomment if you want text to stay on one line */
+    }
+
+    .long-content {
+        min-width: 800px;
+        /* Ensure content is wide enough to trigger scroll */
+        /* Adjust this value based on your content's natural width */
+    }
+</style>
