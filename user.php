@@ -19,7 +19,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
         </div>
         <div class="card-body-scrollable">
             <div class="row">
-                <div class="col d-flex justify-content-end">
+                <div class="col d-flex justify-content-end mb-3">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah User</button>
                 </div>
                 <!-- Modal tambah user -->
@@ -291,7 +291,15 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                     <th scope="col">Password</th>
                                     <th scope="col">Level User</th>
                                     <th scope="col">Kios</th>
-                                    <th scope="col">Aksi</th>
+                                    <?php
+                                    if ($_SESSION["level_kantin"] == 1) {
+                                    ?>
+                                        <th scope="col">Aksi</th>
+                                    <?php
+                                    } else {
+                                    }
+                                    ?>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -315,11 +323,19 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             }
                                             ?></td>
                                         <td><?php echo $row['Kios'] ?></td>
-                                        <td class="d-flex">
-                                            <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalView<?php echo $row['id'] ?>"> <i class="bi bi-eye-fill"></i></button>
-                                            <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id'] ?>"> <i class="bi bi-pencil-fill"></i></button>
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id'] ?>"> <i class="bi bi-trash-fill"></i></button>
-                                        </td>
+                                        <?php
+                                        if ($_SESSION["level_kantin"] == 1) {
+                                        ?>
+                                            <td class="d-flex">
+                                                <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalView<?php echo $row['id'] ?>"> <i class="bi bi-eye-fill"></i></button>
+                                                <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                            </td>
+                                        <?php
+                                        } else {
+                                        }
+                                        ?>
+
                                     </tr>
                                 <?php
                                 }

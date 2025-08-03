@@ -6,8 +6,11 @@ if (isset($_GET['x']) && $_GET['x'] == 'home') {
 } elseif (isset($_GET['x']) && $_GET['x'] == 'menu') {
     $page = 'menu.php';
     include "main.php";
-} elseif (isset($_GET['x']) && $_GET['x'] == 'transaksi') {
-    $page = 'transaksi.php';
+} elseif (isset($_GET['x']) && $_GET['x'] == 'order') {
+    $page = 'order.php';
+    include "main.php";
+}elseif (isset($_GET['x']) && $_GET['x'] == 'orderitem') {
+    $page = 'order_item.php';
     include "main.php";
 } elseif (isset($_GET['x']) && $_GET['x'] == 'user') {
     if ($_SESSION["level_kantin"] == 1) {

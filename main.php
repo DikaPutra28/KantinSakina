@@ -29,10 +29,13 @@ $hasil = mysqli_fetch_array($query);
                         <?php include 'head.php'; ?>
                         <?php include 'navbar.php'; ?>
                         <!-- End of Topbar -->
+                        <div class="row mb-5">
+                              <?php
+                              include $page;
+                              ?>
+                        </div>
                         <!-- Conten -->
-                        <?php
-                        include $page;
-                        ?>
+
                         <!-- Footer -->
                         <footer class="sticky-footer bg-white">
                               <div class="container my-auto">

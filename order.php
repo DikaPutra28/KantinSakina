@@ -1,15 +1,22 @@
 <?php
 include "Database/connect.php";
-$query = mysqli_query($conn, "select * from tb_menu
-LEFT JOIN tb_kategori_menu ON tb_kategori_menu.id_kategori = tb_menu.kategori");
-$sel_kategori = mysqli_query($conn, "SELECT id_kategori,kategori_menu FROM tb_kategori_menu");
+$query = mysqli_query($conn, "SELECT *, SUM(harga*jumlah) AS harganya from tb_order
+LEFT JOIN user ON user.id = tb_order.kasir
+LEFT JOIN tb_list_order ON tb_list_order.order = tb_order.id_order
+LEFT JOIN tb_menu ON tb_menu.id = tb_list_order.menu
+GROUP BY tb_order.id_order");
+// $sel_kategori = mysqli_query($conn, "SELECT id_kategor i,kategori_menu FROM tb_kategori_menu");
 $query2 = mysqli_query($conn, "select * from tb_kios");
-while ($record2 = mysqli_fetch_array($query2)) {
-    $result2[] = $record2;
-}
 while ($record = mysqli_fetch_array($query)) {
     $result[] = $record;
 }
+
+// var_dump($result);
+// exit();
+while ($record2 = mysqli_fetch_array($query2)) {
+    $result2[] = $record2;
+}
+
 
 ?>
 
@@ -18,21 +25,13 @@ while ($record = mysqli_fetch_array($query)) {
     <div class="card">
         <div class="card-header">
             <i class="bi bi-fork-knife"></i>
-            Menu
+            Setingan User
         </div>
         <div class="card-body-scrollable">
-            <div class="row">
-                <?php
-                if ($_SESSION["level_kantin"] == 1) {
-                ?>
-                    <div class="col d-flex justify-content-end mb-3">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah Menu</button>
-                    </div>
-                <?php
-                } else {
-                }
-                ?>
-
+            <div class="row mb-3">
+                <div class="col d-flex justify-content-end">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah Menu</button>
+                </div>
                 <!-- Modal tambah menu -->
                 <div class="modal fade" id="ModalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl modal-fullscreen-md-down">
@@ -271,7 +270,7 @@ while ($record = mysqli_fetch_array($query)) {
                                         <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
                                         <input type="hidden" name="foto" value="<?php echo $row['foto'] ?>">
                                         <div class="col-lg-12">
-
+                                            
                                             <h5>Apakah Anda yakin ingin menghapus menu <strong><?php echo $row['nama'] ?></strong>?</h5>
                                             <p>Data yang dihapus tidak dapat dikembalikan.</p>
 
@@ -403,23 +402,16 @@ while ($record = mysqli_fetch_array($query)) {
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Foto Menu</th>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Keterangan</th>
-                                    <th scope="col">Jenis Menu</th>
-                                    <th scope="col">Kategori</th>
-                                    <th scope="col">Harga</th>
-                                    <th scope="col">Stock</th>
+                                    <th scope="col">Kode Order</th>
+                                    <th scope="col">Pelanggan</th>
+                                    <th scope="col">Meja</th>
+                                    <th scope="col">Total Harga</th>
+                                    <th scope="col">Kasir</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Waktu Order</th>
                                     <th scope="col">Nama Toko</th>
-                                    <?php
-                                    if ($_SESSION["level_kantin"] == 1) {
-                                    ?>
-                                        <th scope="col">Aksi</th>
-                                    <?php
-                                    } else {
-                                    }
-                                    ?>
-                                </tr>
+                                    <th scope="col">Aksi</th>
+                                </tr> 
                             </thead>
                             <tbody>
                                 <?php
@@ -428,34 +420,22 @@ while ($record = mysqli_fetch_array($query)) {
                                 ?>
                                     <tr>
                                         <th scope="row"><?php echo $id_nomor++ ?></th>
+                                        <td><?php echo $row['kode_order'] ?></td>
+                                        <td><?php echo $row['pelanggan'] ?></td>
+                                        <td><?php echo $row['meja'] ?></td>
+                                        <td><?php echo number_format($row['harganya'],0,',','.') ?></td>
+                                        <td><?php echo $row['username'] ?></td>
+                                        <td><?php echo $row['status'] ?></td>
+                                        <td><?php echo $row['waktu_order'] ?></td>
+                                        <td><?php echo $row['nama_kios'] ?></td>
                                         <td>
-                                            <div style="width: 100px;">
-                                                <img src="assets/img/<?php echo $row['foto'] ?>" class="img-thumbnail" alt="...">
+                                            <div class="d-flex">
+                                                <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalView<?php echo $row['id_order'] ?>"> <i class="bi bi-eye-fill"></i></button>
+                                                <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
                                             </div>
+
                                         </td>
-                                        <td><?php echo $row['nama'] ?></td>
-                                        <td><?php echo $row['keterangan'] ?></td>
-                                        <td><?php echo ($row['jenis_menu'] == 1) ? "Makanan" : "Minuman" ?></td>
-                                        <td><?php echo $row['kategori_menu'] ?></td>
-                                        <td><?php echo $row['harga'] ?></td>
-                                        <td><?php echo $row['stok'] ?></td>
-                                        <td><?php echo $row['nama_toko'] ?></td>
-                                        <?php
-                                        if ($_SESSION["level_kantin"] == 1) {
-                                        ?>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalView<?php echo $row['id'] ?>"> <i class="bi bi-eye-fill"></i></button>
-                                                    <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id'] ?>"> <i class="bi bi-pencil-fill"></i></button>
-                                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id'] ?>"> <i class="bi bi-trash-fill"></i></button>
-                                                </div>
-
-                                            </td>
-                                        <?php
-                                        } else {
-                                        }
-                                        ?>
-
                                     </tr>
                                 <?php
                                 }

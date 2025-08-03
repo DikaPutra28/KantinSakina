@@ -16,7 +16,7 @@ while ($record = mysqli_fetch_array($query)) {
         </div>
         <div class="card-body-scrollable">
             <div class="row">
-                <div class="col d-flex justify-content-end">
+                <div class="col d-flex justify-content-end mb-3">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalTambah">Tambah User</button>
                 </div>
                 <!-- Modal tambah user -->
