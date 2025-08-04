@@ -37,6 +37,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
             Setingan User
         </div>
         <div class="card-body-scrollable">
+            <a href="order" class="btn btn-info mb-3">back</a>
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-floating ">
