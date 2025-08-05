@@ -17,7 +17,7 @@ if (isset($_POST['input_order_proses'])) {
                 $query = mysqli_query($conn, "INSERT INTO tb_order (id_order, meja, pelanggan, nama_kios, catatan,kasir) VALUES ('$kodeorder', '$meja', '$pelanggan', '$kios', '$catatan', '$_SESSION[id_kantin]')");
                 if ($query) {
                         $message =  '<script>alert("Order berhasil ditambahkan"); 
-                        window.location.href="../?x=orderitem&order='.$kodeorder.'&meja='.$meja.'&pelanggan='.$pelanggan.'&kios='.$kios.'";</script>';
+                        window.location.href="../?x=orderitem&kode_order='.$kodeorder.'&meja='.$meja.'&pelanggan='.$pelanggan.'&kios='.$kios.'";</script>';
                 } else {
                         echo "<script>alert('Gagal menambahkan order'); window.location.href='../order';</script>";
                 }

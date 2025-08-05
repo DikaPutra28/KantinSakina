@@ -1,11 +1,13 @@
+
 <?php
 include "Database/connect.php";
 date_default_timezone_set("Asia/Jakarta");
 $query = mysqli_query($conn, "SELECT *, SUM(harga*jumlah) AS harganya from tb_order
 LEFT JOIN user ON user.id = tb_order.kasir
-LEFT JOIN tb_list_order ON tb_list_order.order = tb_order.id_order
+LEFT JOIN tb_list_order ON tb_list_order.kode_order = tb_order.id_order
 LEFT JOIN tb_menu ON tb_menu.id = tb_list_order.menu
-GROUP BY tb_order.id_order");
+LEFT JOIN tb_bayar ON tb_bayar.id_bayar = tb_list_order.kode_order
+GROUP BY tb_order.id_order ORDER BY tb_order.waktu_order DESC");
 // $sel_kategori = mysqli_query($conn, "SELECT id_kategor i,kategori_menu FROM tb_kategori_menu");
 $query2 = mysqli_query($conn, "select * from tb_kios");
 while ($record = mysqli_fetch_array($query)) {
@@ -265,15 +267,15 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                         <td><?php echo $row['meja'] ?></td>
                                         <td><?php echo number_format($row['harganya'], 0, ',', '.') ?></td>
                                         <td><?php echo $row['username'] ?></td>
-                                        <td><?php echo $row['status'] ?></td>
+                                        <td><?php echo (!empty($row['id_bayar'])) ? "<span class='badge text-bg-success'>Dibayar</span>" : "<span class='badge text-bg-danger'>Belum Dibayar</span>";?></td>
                                         <td><?php echo $row['waktu_order'] ?></td>
                                         <td><?php echo $row['nama_kios'] ?></td>
                                         <td>
                                             <div class="d-flex">
                                                 <!-- <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalView<?php echo $row['id_order'] ?>"> <i class="bi bi-eye-fill"></i></button> -->
-                                                <a class="btn btn-info btn-sm me-2" href="./?x=orderitem&order=<?php echo $row['id_order'] . "&meja=" . $row['meja'] . "&pelanggan=" . $row['pelanggan'] . "&kios=" . $row['nama_kios'] ?>"><i class="bi bi-eye-fill"></i></a>
-                                                <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
-                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                <a class="btn btn-info btn-sm me-2" href="./?x=orderitem&kode_order=<?php echo $row['id_order'] . "&meja=" . $row['meja'] . "&pelanggan=" . $row['pelanggan'] . "&kios=" . $row['nama_kios'] ?>"><i class="bi bi-eye-fill"></i></a>
+                                                <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-warning btn-sm me-2 "  ;  ?> " data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-danger btn-sm me-2"  ;  ?> " data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
                                             </div>
 
                                         </td>
