@@ -8,7 +8,7 @@
             <h5 class="card-title">Sakina Kantin</h5>
             <p class="card-text">Selamat Datang Di Aplikasi Sakina Kantin
             </p>
-            <a href="#" class="btn btn-primary">Mulai order</a>
+            <a href="order" class="btn btn-primary">Mulai order</a>
         </div>
     </div>
 

@@ -11,6 +11,7 @@ $kode = $_GET['kode_order'];
 $meja = $_GET['meja'];
 $customer = $_GET['pelanggan'];
 $toko = $_GET['kios'];
+$waktu_order = $GET['waktu_order'] ?? date('Y-m-d H:i:s');
 $set_menu = mysqli_query($conn, "SELECT id,nama FROM tb_menu where nama_toko = '$toko'");
 $query2 = mysqli_query($conn, "select * from tb_kios");
 while ($record = mysqli_fetch_array($query)) {
@@ -388,7 +389,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                                             <td><?php echo number_format($row['harga'], 0, ',', '.') ?></td>
                                                             <td><?php echo $row['jumlah'] ?></td>
                                                             <td><?php echo $row['catatan_order'] ?></td>
-                                                            <td><?php echo number_format($row['harganya'], 0, ',', '.') ?></td>           
+                                                            <td><?php echo number_format($row['harganya'], 0, ',', '.') ?></td>
                                                         </tr>
                                                     <?php
                                                     }
@@ -427,7 +428,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                                 </div> -->
                                                 <div class="col-lg-12">
                                                     <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="bayar" placeholder="Jumlah Bayar" name="bayar" required>
+                                                        <input type="number" class="form-control" id="bayar" value="<?php echo $total ?>" placeholder="<?php echo $total ?>" name="bayar" required>
                                                         <label for="bayar">Jumlah Bayar</label>
                                                         <div class="invalid-feedback">
                                                             Jumlah bayar tidak boleh kosong
@@ -438,12 +439,15 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-success" name="proses_bayar">Bayar</button>
+
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
 
                     <?php
                     }
@@ -477,8 +481,22 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             <td><?php echo number_format($row['harganya'], 0, ',', '.') ?></td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-warning btn-sm me-2 "  ;  ?> " data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_list_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
-                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-danger btn-sm me-2"  ;  ?> " data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_list_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                <?php
+                                                if ($_SESSION["level_kantin"] == 1) {
+
+                                                ?>
+                                                    <button class="btn btn-warning btn-sm me-2"data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_list_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                    <button class="btn btn-danger btn-sm me-2"data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_list_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-warning btn-sm me-2 ";  ?> " data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_list_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-danger btn-sm me-2";  ?> " data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_list_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                <?php
+                                                }
+                                                ?>
+                                                
+                                                    
                                                 </div>
 
                                             </td>
@@ -508,23 +526,130 @@ while ($record2 = mysqli_fetch_array($query2)) {
                     }
                     ?>
                     <div>
-                        <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-success"  ;  ?>" data-bs-toggle="modal" data-bs-target="#tambahItem"><i class="bi bi-plus-square-dotted"></i> Item</button>
-                        <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-primary"  ;  ?>" data-bs-toggle="modal" data-bs-target="#bayar"><i class="bi bi-cash-coin"></i> Bayar</button>
+                        <?php
+                        if ($_SESSION["level_kantin"] == 1) {
+                        ?>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahItem"><i class="bi bi-plus-square-dotted"></i>Item</button>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bayar"><i class="bi bi-cash-coin"></i> Bayar</button>
+                        <?php
+                        } else {
+                        ?>
+
+                            <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-primary";  ?>" data-bs-toggle="modal" data-bs-target="#tambahItem"><i class="bi bi-plus-square-dotted"></i>Item</button>
+                            <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-success";  ?>" data-bs-toggle="modal" data-bs-target="#bayar"><i class="bi bi-cash-coin"></i> Bayar</button>
+                        <?php
+                        }
+                        ?>
+                        <button class="btn btn-info" onclick="printStruk()"><i class="bi bi-printer"></i> Print Struk</button>
                     </div>
-
-
-
                 </div>
-
-
-
-
-
             </div>
-
-
         </div>
     </div>
+
+
+    <div id="strukContent" style="display: none;">
+
+        <style>
+            #struk_body {
+                width: 60mm;
+                font-family: Arial, sans-serif;
+                text-align: left;
+                font-size: 12px;
+                border: 1px solid black;
+                padding: 10px;
+
+            }
+            #struk_body h2 {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            #struk_body table {
+                width: 50%;
+                font-size: 12px;
+                text-align: left;
+                margin: 0 auto;
+                border-collapse: collapse;
+            }
+
+            #struk_body table th,
+            #struk_body table td {
+                border: 1px solid black;
+                padding: 5px;
+            }
+
+            .logo-struk {
+                width: 100px;
+                /* Adjust the size as needed */
+                height: auto;
+            }
+
+           
+        </style>
+
+        <div id="struk_body" class="container">
+            <img src="assets/img/logosakina.png" alt="Logo Toko" class="logo-struk">
+            <h2 class="text-center">Struk Pembayaran</h2>
+            waktu order : <?php echo $waktu_order ?>
+            <div class="row">
+                <div class="col-lg-3">
+                    Kode Order: <?php echo $kode;  ?>
+                </div>
+                <div class="col-lg-3">
+                    Meja: <?php echo $meja; ?>
+                </div>
+                <div class="col-lg-3">
+                    Pelanggan: <?php echo $customer; ?>
+                </div>
+                <div class="col-lg-3">
+                    Kios: <?php echo $toko; ?>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Menu</th>
+                        <th>Harga</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Catatan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($result as $row) {
+                        echo "<tr>";
+                        echo "<td>" . $row['nama'] . "</td>";
+                        echo "<td>" . number_format($row['harga'], 0, ',', '.') . "</td>";
+                        echo "<td>" . $row['jumlah'] . "</td>";
+                        echo "<td>" . number_format($row['harganya'], 0, ',', '.') . "</td>";
+                        echo "<td>" . $row['catatan_order'] . "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <h3>Total: <?php echo number_format($total, 0, ',', '.'); ?></h3>
+        </div>
+    </div>
+
+
+
+    <script>
+        function printStruk() {
+            var strukContent = document.getElementById("strukContent").innerHTML;
+            var printFrame = document.createElement("iframe");
+            printFrame.style.display = "none";
+            document.body.appendChild(printFrame);
+            printFrame.contentDocument.write(strukContent);
+            printFrame.contentWindow.print();
+        }
+    </script>
+
+
+
     <script>
         (() => {
             'use strict'
@@ -545,6 +670,12 @@ while ($record2 = mysqli_fetch_array($query2)) {
             })
         })()
     </script>
+    <style>
+        .logo-struk {
+            width: 5px;
+            height: auto;
+        }
+    </style>
 
     <style>
         /* Include the CSS here or link to an external stylesheet */

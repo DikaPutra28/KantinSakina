@@ -27,7 +27,8 @@ while ($record2 = mysqli_fetch_array($query2)) {
 
 
 
-
+header("Content-type : application/vnd-ms-excel");
+header("Content-Disposition: attachment; filename=laporan_excel.xls");
 
 ?>
 
@@ -169,7 +170,6 @@ while ($record2 = mysqli_fetch_array($query2)) {
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
 
             </div>
@@ -177,75 +177,9 @@ while ($record2 = mysqli_fetch_array($query2)) {
         </div>
     </div>
 
-    <button class="btn btn-info" onclick="printExcel()"><i class="bi bi-printer"></i> Print Struk</button>
-
-    <div id="laporan_excel" style="display: none;">
-        <table class="table table-hover" id="table_laporan">
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Kode Order</th>
-                    <th scope="col">Pelanggan</th>
-                    <th scope="col">Meja</th>
-                    <th scope="col">Total Harga</th>
-                    <th scope="col">Kasir</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Waktu Order</th>
-                    <th scope="col">Nama Toko</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $id_nomor = 1;
-                foreach ($result as $row) {
-                ?>
-                    <tr>
-                        <th scope="row"><?php echo $id_nomor++ ?></th>
-                        <td><?php echo $row['id_order'] ?></td>
-                        <td><?php echo $row['pelanggan'] ?></td>
-                        <td><?php echo $row['meja'] ?></td>
-                        <td><?php echo number_format($row['harganya'], 0, ',', '.') ?></td>
-                        <td><?php echo $row['username'] ?></td>
-                        <td><?php echo (!empty($row['id_bayar'])) ? "<span class='badge text-bg-success'>Dibayar</span>" : "<span class='badge text-bg-danger'>Belum Dibayar</span>"; ?></td>
-                        <td><?php echo $row['waktu_order'] ?></td>
-                        <td><?php echo $row['nama_kios'] ?></td>
-                    </tr>
-                <?php
-                }
-                ?>
-                <tr>
-                    <td class="fw-bold" colspan="4">
-                        Total Penjualan
-                    </td>
-                    <td class="fw-bold">
-                        <?php
-                        $total = 0;
-                        foreach ($result as $row) {
-                            $total += $row['harganya'];
-                        }
-                        echo number_format($total, 0, ',', '.');
-                        ?>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <script>
-        function printExcel() {
-            var laporan_dokumen = document.getElementById("laporan_excel").innerHTML;
-            var printFrame = document.createElement("iframe");
-            printFrame.style.display = "none";
-            document.body.appendChild(printFrame);
-            printFrame.contentDocument.write(laporan_dokumen);
-            printFrame.contentWindow.print();
-
-            
+   
 
 
-        }
-    </script>
     <script>
         let table = new DataTable('#table_laporan');
     </script>

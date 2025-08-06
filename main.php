@@ -44,6 +44,7 @@ $hasil = mysqli_fetch_array($query);
                                     </div>
                               </div>
                         </footer>
+                        <?php include 'footerJS.php'; ?>
                         <!-- End of Footer -->
 
                   </div>
@@ -60,7 +61,7 @@ $hasil = mysqli_fetch_array($query);
             <!-- Logout Modal-->
 
 
-            <?php include 'footerJS.php'; ?>
+            
 
 
 </body>

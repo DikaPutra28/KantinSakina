@@ -1,5 +1,5 @@
-
 <?php
+
 include "Database/connect.php";
 date_default_timezone_set("Asia/Jakarta");
 $query = mysqli_query($conn, "SELECT *, SUM(harga*jumlah) AS harganya from tb_order
@@ -95,11 +95,8 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                     <div class="row mt-3">
                                         <div class="col-lg-12">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="catatan" placeholder="Masukan Catatan Jika Ada" name="catatan" required>
+                                                <input type="text" class="form-control" id="catatan" placeholder="Masukan Catatan Jika Ada" name="catatan">
                                                 <label for="catatan">Catatan</label>
-                                                <div class="invalid-feedback">
-                                                    Catatan tidak boleh kosong
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +130,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             <div class="row mt-3">
                                                 <div class="col-lg-3">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" id="floatingkodeorder" placeholder="" name="kode_order" value="<?php echo $row['id_order']?>" readonly>
+                                                        <input type="text" class="form-control" id="floatingkodeorder" placeholder="" name="kode_order" value="<?php echo $row['id_order'] ?>" readonly>
                                                         <label for="floatingkodeorder">Kode Order</label>
                                                         <div class="invalid-feedback">
                                                             Masukan Kode Order
@@ -142,7 +139,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="form-floating">
-                                                        <input type="number" class="form-control" id="floatingmeja" placeholder="nomor meja" name="meja" value="<?php echo $row['meja']?>" required>
+                                                        <input type="number" class="form-control" id="floatingmeja" placeholder="nomor meja" name="meja" value="<?php echo $row['meja'] ?>" required>
                                                         <label for="floatingmeja">Meja</label>
                                                         <div class="invalid-feedback">
                                                             Meja tidak boleh kosong
@@ -151,7 +148,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                                 </div>
                                                 <div class="col-lg-5">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" id="floatingpelanggan" placeholder="nama pelanggan" name="pelanggan" value="<?php echo $row['pelanggan']?>" required>
+                                                        <input type="text" class="form-control" id="floatingpelanggan" placeholder="nama pelanggan" name="pelanggan" value="<?php echo $row['pelanggan'] ?>" required>
                                                         <label for="floatingpelanggan">Pelanggan</label>
                                                         <div class="invalid-feedback">
                                                             Nama Pelanggan tidak boleh kosong
@@ -160,8 +157,8 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="form-floating">
-                                                        <select class="form-select" aria-label="Default select example" name="kios"  required>
-                                                            <option selected hidden value="<?php echo $row['nama_kios']?>"><?php echo $row['nama_kios']?></option>
+                                                        <select class="form-select" aria-label="Default select example" name="kios" required>
+                                                            <option selected hidden value="<?php echo $row['nama_kios'] ?>"><?php echo $row['nama_kios'] ?></option>
                                                             <?php
                                                             foreach ($result2 as $row2) {
                                                             ?>
@@ -180,7 +177,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             <div class="row mt-3">
                                                 <div class="col-lg-12">
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control" id="catatan" placeholder="Masukan Catatan Jika Ada" name="catatan" value="<?php echo $row['catatan']?>" required>
+                                                        <input type="text" class="form-control" id="catatan" placeholder="Masukan Catatan Jika Ada" name="catatan" value="<?php echo $row['catatan'] ?>" required>
                                                         <label for="catatan">Catatan</label>
                                                         <div class="invalid-feedback">
                                                             Catatan tidak boleh kosong
@@ -211,11 +208,11 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                     <div class="modal-body">
                                         <form class="needs-validation" novalidate action="validate/validate_delete_order.php" method="post">
                                             <input type="hidden" name="id_order" value="<?php echo $row['id_order'] ?>">
-                                            
+
                                             <div class="col-lg-12">
 
                                                 <h5>Apakah anda yakin ingin menghapus order atas nama <b><?php echo $row['pelanggan'] ?> dengan kode order <?php echo $row['id_order'] ?> ?</b></h5>
-                                                
+
 
                                             </div>
 
@@ -240,7 +237,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                 } else {
                 ?>
                     <div class="table-responsive-lg-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="table_order">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -267,15 +264,29 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                         <td><?php echo $row['meja'] ?></td>
                                         <td><?php echo number_format($row['harganya'], 0, ',', '.') ?></td>
                                         <td><?php echo $row['username'] ?></td>
-                                        <td><?php echo (!empty($row['id_bayar'])) ? "<span class='badge text-bg-success'>Dibayar</span>" : "<span class='badge text-bg-danger'>Belum Dibayar</span>";?></td>
+                                        <td><?php echo (!empty($row['id_bayar'])) ? "<span class='badge text-bg-success'>Dibayar</span>" : "<span class='badge text-bg-danger'>Belum Dibayar</span>"; ?></td>
                                         <td><?php echo $row['waktu_order'] ?></td>
                                         <td><?php echo $row['nama_kios'] ?></td>
                                         <td>
                                             <div class="d-flex">
+                                                <?php
+                                                if ($_SESSION["level_kantin"] == 1) {
+
+                                                ?>
+                                                    <a class="btn btn-info btn-sm me-2" href="./?x=orderitem&kode_order=<?php echo $row['id_order'] . "&meja=" . $row['meja'] . "&pelanggan=" . $row['pelanggan'] . "&kios=" . $row['nama_kios'] ?>"><i class="bi bi-eye-fill"></i></a>
+                                                    <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                    <button class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <a class="btn btn-info btn-sm me-2" href="./?x=orderitem&kode_order=<?php echo $row['id_order'] . "&meja=" . $row['meja'] . "&pelanggan=" . $row['pelanggan'] . "&kios=" . $row['nama_kios'] ?>"><i class="bi bi-eye-fill"></i></a>
+                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-warning btn-sm me-2 ";  ?> " data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-danger btn-sm me-2";  ?> " data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                <?php
+                                                }
+                                                ?>
                                                 <!-- <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalView<?php echo $row['id_order'] ?>"> <i class="bi bi-eye-fill"></i></button> -->
-                                                <a class="btn btn-info btn-sm me-2" href="./?x=orderitem&kode_order=<?php echo $row['id_order'] . "&meja=" . $row['meja'] . "&pelanggan=" . $row['pelanggan'] . "&kios=" . $row['nama_kios'] ?>"><i class="bi bi-eye-fill"></i></a>
-                                                <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-warning btn-sm me-2 "  ;  ?> " data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
-                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-danger btn-sm me-2"  ;  ?> " data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+
                                             </div>
 
                                         </td>
@@ -321,6 +332,9 @@ while ($record2 = mysqli_fetch_array($query2)) {
             }, false)
         })
     })()
+</script>
+<script>
+    let table = new DataTable('#table_order');
 </script>
 
 <style>

@@ -16,10 +16,20 @@
       <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
       <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
+      
 
       <!-- Custom styles for this template-->
       <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+      <!-- Custom styles for this page -->
+       <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+      <!-- DataTables -->
+       <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
+      <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+
+      <!-- Toastify CSS -->
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 
 </head>

@@ -283,7 +283,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                 } else {
                 ?>
                     <div class="table-responsive-lg-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="table_user">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -359,6 +359,17 @@ while ($record2 = mysqli_fetch_array($query2)) {
 
     </div>
 </div>
+<!-- End of Conten -->
+ <!-- <script> 
+ Toastify({
+  text: "This is a toast",
+  className: "info",
+  style: {
+    background: "linear-gradient(to right, #00b09b, #96c93d)",
+  }
+}).showToast();
+ 
+ </script> -->
 <script>
     (() => {
         'use strict'
@@ -378,6 +389,11 @@ while ($record2 = mysqli_fetch_array($query2)) {
             }, false)
         })
     })()
+</script>
+
+<script>
+    let table = new DataTable('#table_user');
+
 </script>
 
 <style>

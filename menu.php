@@ -158,7 +158,7 @@ while ($record = mysqli_fetch_array($query)) {
                                         <div class="row mt-3">
                                             <div class="col lg-12">
                                                 <div class="input-group">
-                                                    <input type="file" class="form-control py-9" id="floatingInputGambar" placeholder="Masukan Gambar" name="foto" required>
+                                                    <input type="file" class="form-control py-9" id="floatingInputGambar" placeholder="Masukan Gambar" name="foto">
                                                     <label class="input-group-text" for="floatingInputGambar">Upload Foto Menu</label>
                                                     <div class="invalid-feedback">
                                                         Gambar tidak boleh kosong
@@ -399,7 +399,7 @@ while ($record = mysqli_fetch_array($query)) {
                 } else {
                 ?>
                     <div class="table-responsive-lg-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="table_menu">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -498,6 +498,10 @@ while ($record = mysqli_fetch_array($query)) {
             }, false)
         })
     })()
+</script>
+
+<script>
+    let table = new DataTable('#table_menu');
 </script>
 
 <style>
