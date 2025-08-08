@@ -31,6 +31,12 @@ if (isset($_GET['x']) && $_GET['x'] == 'home') {
 } elseif (isset($_GET['x']) && $_GET['x'] == 'laporan') {
     $page = 'laporan.php';
     include "main.php";
+} elseif (isset($_GET['x']) && $_GET['x'] == 'laporan_order') {
+    $page = 'laporan_order.php';
+    include "main.php";
+} elseif (isset($_GET['x']) && $_GET['x'] == 'laporan_menu') {
+    $page = 'laporan_menu.php';
+    include "main.php";
 } elseif (isset($_GET['x']) && $_GET['x'] == 'history') {
     $page = 'history.php';
     include "main.php";
