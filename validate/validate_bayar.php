@@ -12,6 +12,7 @@ $catatan_order = (isset($_POST["catatan_order"])) ? htmlentities($_POST["catatan
 $toko = (isset($_POST["kios"])) ? htmlentities($_POST["kios"]) : "";
 $total_bayar = (isset($_POST["total_bayar"])) ? htmlentities($_POST["total_bayar"]) : "";
 $bayar = (isset($_POST["bayar"])) ? htmlentities($_POST["bayar"]) : "";
+$grand_total = (isset($_POST["grand_total"])) ? htmlentities($_POST["grand_total"]) : "";
 
 $kembalian = $bayar - $total_bayar;
 if (isset($_POST['proses_bayar'])) {

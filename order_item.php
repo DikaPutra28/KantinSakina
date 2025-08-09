@@ -407,6 +407,33 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                                             echo number_format($total, 0, ',', '.');
                                                             ?>
                                                         </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" class="fw-bold">
+                                                            Grand Total
+                                                        </td>
+                                                        <td class="fw-bold">
+                                                            <?php
+                                                            // Ambil nilai diskon dari input user jika ada, jika tidak pakai default 10%
+                                                            $diskon_persen = isset($_POST['diskon_persen']) ? floatval($_POST['diskon_persen']) : 0;
+                                                            $ppn_persen = 11; // Tetap 11% (atau bisa juga dibuat input jika mau)
+
+                                                            $diskon = ($total * $diskon_persen) / 100;
+                                                            $total_setelah_diskon = $total - $diskon;
+                                                            $ppn = ($total_setelah_diskon * $ppn_persen) / 100;
+                                                            $grand_total = $total_setelah_diskon + $ppn;
+                                                            ?>
+                                                            <form method="post" action="">
+                                                                <div class="mb-2">
+                                                                    <label for="diskon_persen" class="form-label">Diskon (%)</label>
+                                                                    <input type="number" min="0" max="100" step="0.01" name="diskon_persen" id="diskon_persen" class="form-control form-control-sm d-inline-block" style="width:80px;" value="<?php echo htmlspecialchars($diskon_persen); ?>" onchange="this.form.submit()">
+                                                                </div>
+                                                            </form>
+                                                            <div>Diskon (<?php echo $diskon_persen; ?>%): -<?php echo number_format($diskon, 0, ',', '.'); ?></div>
+                                                            <div>PPN (<?php echo $ppn_persen; ?>%): <?php echo number_format($ppn, 0, ',', '.'); ?></div>
+                                                            <div class="fw-bold">Grand Total: <?php echo number_format($grand_total, 0, ',', '.'); ?></div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -419,6 +446,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             <input type="hidden" name="pelanggan" value="<?php echo $customer ?>">
                                             <input type="hidden" name="kios" value="<?php echo $toko ?>">
                                             <input type="hidden" name="total_bayar" value="<?php echo $total ?>">
+                                            <input type="hidden" name="grand_total" value="<?php echo $grand_total ?>">
                                             <div class="row mt-3">
                                                 <!-- <div class="col-lg-6">
                                                     <div class="form-floating mb-3">
@@ -428,7 +456,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                                 </div> -->
                                                 <div class="col-lg-12">
                                                     <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control" id="bayar" value="<?php echo $total ?>" placeholder="<?php echo $total ?>" name="bayar" required>
+                                                        <input type="number" class="form-control" id="bayar" value="<?php echo $grand_total ?>" placeholder="<?php echo $grand_total ?>" name="bayar" required>
                                                         <label for="bayar">Jumlah Bayar</label>
                                                         <div class="invalid-feedback">
                                                             Jumlah bayar tidak boleh kosong
@@ -481,22 +509,22 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             <td><?php echo number_format($row['harganya'], 0, ',', '.') ?></td>
                                             <td>
                                                 <div class="d-flex">
-                                                <?php
-                                                if ($_SESSION["level_kantin"] == 1) {
+                                                    <?php
+                                                    if ($_SESSION["level_kantin"] == 1) {
 
-                                                ?>
-                                                    <button class="btn btn-warning btn-sm me-2"data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_list_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
-                                                    <button class="btn btn-danger btn-sm me-2"data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_list_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-warning btn-sm me-2 ";  ?> " data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_list_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
-                                                    <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-danger btn-sm me-2";  ?> " data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_list_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
-                                                <?php
-                                                }
-                                                ?>
-                                                
-                                                    
+                                                    ?>
+                                                        <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_list_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                        <button class="btn btn-danger btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_list_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-warning btn-sm me-2 ";  ?> " data-bs-toggle="modal" data-bs-target="#ModalEdit<?php echo $row['id_list_order'] ?>"> <i class="bi bi-pencil-fill"></i></button>
+                                                        <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary btn-sm me-2 disabled" : "btn btn-danger btn-sm me-2";  ?> " data-bs-toggle="modal" data-bs-target="#ModalDelete<?php echo $row['id_list_order'] ?>"> <i class="bi bi-trash-fill"></i></button>
+                                                    <?php
+                                                    }
+                                                    ?>
+
+
                                                 </div>
 
                                             </td>
@@ -516,6 +544,32 @@ while ($record2 = mysqli_fetch_array($query2)) {
                                             }
                                             echo number_format($total, 0, ',', '.');
                                             ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="fw-bold">
+                                            Grand Total
+                                        </td>
+                                        <td class="fw-bold">
+                                            <?php
+                                            // Ambil nilai diskon dari input user jika ada, jika tidak pakai default 10%
+                                            $diskon_persen = isset($_POST['diskon_persen']) ? floatval($_POST['diskon_persen']) : 0;
+                                            $ppn_persen = 11; // Tetap 11% (atau bisa juga dibuat input jika mau)
+
+                                            $diskon = ($total * $diskon_persen) / 100;
+                                            $total_setelah_diskon = $total - $diskon;
+                                            $ppn = ($total_setelah_diskon * $ppn_persen) / 100;
+                                            $grand_total = $total_setelah_diskon + $ppn;
+                                            ?>
+                                            <form method="post" action="">
+                                                <div class="mb-2">
+                                                    <label for="diskon_persen" class="form-label">Diskon (%)</label>
+                                                    <input type="number" min="0" max="100" step="0.01" name="diskon_persen" id="diskon_persen" class="form-control form-control-sm d-inline-block" style="width:80px;" value="<?php echo htmlspecialchars($diskon_persen); ?>" onchange="this.form.submit()">
+                                                </div>
+                                            </form>
+                                            <div>Diskon (<?php echo $diskon_persen; ?>%): -<?php echo number_format($diskon, 0, ',', '.'); ?></div>
+                                            <div>PPN (<?php echo $ppn_persen; ?>%): <?php echo number_format($ppn, 0, ',', '.'); ?></div>
+                                            <div class="fw-bold">Grand Total: <?php echo number_format($grand_total, 0, ',', '.'); ?></div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -551,7 +605,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                         <?php
                         }
                         ?>
-                        
+
                     </div>
                 </div>
             </div>
@@ -571,6 +625,7 @@ while ($record2 = mysqli_fetch_array($query2)) {
                 padding: 10px;
 
             }
+
             #struk_body h2 {
                 text-align: center;
                 margin-bottom: 10px;
@@ -595,8 +650,6 @@ while ($record2 = mysqli_fetch_array($query2)) {
                 /* Adjust the size as needed */
                 height: auto;
             }
-
-           
         </style>
 
         <div id="struk_body" class="container">
@@ -642,7 +695,11 @@ while ($record2 = mysqli_fetch_array($query2)) {
                     ?>
                 </tbody>
             </table>
-            <h3>Total: <?php echo number_format($total, 0, ',', '.'); ?></h3>
+            <div>Total: <?php echo number_format($total, 0, ',', '.'); ?></div>
+            <div>Diskon (<?php echo $diskon_persen; ?>%): -<?php echo number_format($diskon, 0, ',', '.'); ?></div>
+            <div>PPN (<?php echo $ppn_persen; ?>%): <?php echo number_format($ppn, 0, ',', '.'); ?></div>
+            <h3>Grand Total: <?php echo number_format($grand_total, 0, ',', '.'); ?></h3>
+
         </div>
     </div>
 
